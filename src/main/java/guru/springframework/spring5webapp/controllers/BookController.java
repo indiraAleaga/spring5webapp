@@ -1,4 +1,4 @@
-package guru.springframework.spring5webapp.controller;
+package guru.springframework.spring5webapp.controllers;
 
 import guru.springframework.spring5webapp.services.BookService;
 import org.springframework.stereotype.Controller;
