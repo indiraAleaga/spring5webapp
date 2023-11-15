@@ -28,28 +28,48 @@ public class BootStrapData implements CommandLineRunner {
     @Override
     public void run(String... args) {
 
-        Author eric = new Author("Eric", "Evans");
-        Book ddd = new Book("Domain Driven Design", "123123");
-        eric.getBooks().add(ddd);
-        ddd.getAuthors().add(eric);
+        Author eric = new Author();
+        eric.setFirstName("Eric");
+        eric.setLastName("Evans");
 
-        authorRepository.save(eric);
-        bookRepository.save(ddd);
+        Book ddd = new Book();
+        ddd.setTitle("Domain Driven Design");
+        ddd.setIsbn("123456");
 
-        Author rod = new Author("Rod", "Johnson");
-        Book noEJB = new Book("J2EE Development without EJB", "3939459459");
-        rod.getBooks().add(noEJB);
-        noEJB.getAuthors().add(rod);
+        Author ericSaved = authorRepository.save(eric);
+        Book dddSaved = bookRepository.save(ddd);
 
-        authorRepository.save(rod);
-        bookRepository.save(noEJB);
+        Author rod = new Author();
+        rod.setFirstName("Rod");
+        rod.setLastName("Johnson");
 
-        Publisher publisher = new Publisher("Addison-Wesley Professional");
+        Book noEJB = new Book();
+        noEJB.setTitle("J2EE Development without EJB");
+        noEJB.setIsbn("54757585");
 
-        publisherRepository.save(publisher);
+        Author rodSaved = authorRepository.save(rod);
+        Book noEJBSaved = bookRepository.save(noEJB);
 
-        System.out.println("Started in Bootstrap");
-        System.out.println("Number of Books: " + bookRepository.count());
-        System.out.println("Number of Publisher: " + publisherRepository.count());
+        ericSaved.getBooks().add(dddSaved);
+        rodSaved.getBooks().add(noEJBSaved);
+
+        System.out.println("In Bootstrap");
+        System.out.println("Author Count: " + authorRepository.count());
+        System.out.println("Book Count: " + bookRepository.count());
+
+        Publisher publisher = new Publisher("MyPublisher");
+        publisher.setAddress("123 Main");
+        Publisher publisherSaved = publisherRepository.save(publisher);
+
+        dddSaved.setPublisher(publisherSaved);
+        noEJBSaved.setPublisher(publisherSaved);
+
+        bookRepository.save(noEJBSaved);
+        bookRepository.save(dddSaved);
+
+        System.out.println("Repository Count: " + publisherRepository.count());
+
+
+
     }
 }
